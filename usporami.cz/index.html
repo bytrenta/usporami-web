@@ -317,12 +317,12 @@
       <div class="contact-actions"><a href="tel:+420777222199" class="btn btn-primary btn-large"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> 777 222 199</a></div>
       <div class="contact-channels"><div class="contact-channel"><div class="contact-channel-label">E-mail</div><div class="contact-channel-value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> info@usporami.cz</div></div><div class="contact-channel"><div class="contact-channel-label">Kanceláře</div><div class="contact-channel-value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> HK · Praha</div></div></div>
     </div>
-    <form class="contact-form reveal reveal-d1" onsubmit="event.preventDefault();alert('Děkujeme! Ozveme se do 48 hodin.')">
+    <form id="leadForm" class="contact-form reveal reveal-d1">
       <h3>Bezplatná kalkulace</h3><p class="sub">Vyplňte formulář — ozveme se do 48 hodin.</p>
-      <div class="field-row"><div class="field"><label>Jméno</label><input type="text" placeholder="Jan Novák" required></div><div class="field"><label>Telefon</label><input type="tel" placeholder="+420 ..." required></div></div>
-      <div class="field"><label>E-mail</label><input type="email" placeholder="vy@example.cz" required></div>
-      <div class="field"><label>Co potřebujete</label><select><option>Bezúročný úvěr NZÚ</option><option>NZÚ Light (dotace)</option><option>Ukončení dotace</option><option>PENB — průkaz energetické náročnosti</option><option>Energetický audit</option><option>Renovační pas</option><option>Revize otopné soustavy</option><option>Pasport stavby</option><option>Dokumentace pro stavební povolení</option><option>Stavební dozor</option><option>Legalizace stavby</option><option>Nevím, poradíte mi</option></select></div>
-      <div class="field"><label>Popis (volitelné)</label><textarea placeholder="Pár vět o vašem záměru..."></textarea></div>
+      <div class="field-row"><div class="field"><label>Jméno</label><input id="f-jmeno" type="text" placeholder="Jan Novák" required></div><div class="field"><label>Telefon</label><input id="f-tel" type="tel" placeholder="+420 ..." required></div></div>
+      <div class="field"><label>E-mail</label><input id="f-email" type="email" placeholder="vy@example.cz" required></div>
+      <div class="field"><label>Co potřebujete</label><select id="f-sluzba"><option>Bezúročný úvěr NZÚ</option><option>NZÚ Light (dotace)</option><option>Ukončení dotace</option><option>PENB — průkaz energetické náročnosti</option><option>Energetický audit</option><option>Renovační pas</option><option>Revize otopné soustavy</option><option>Pasport stavby</option><option>Dokumentace pro stavební povolení</option><option>Stavební dozor</option><option>Legalizace stavby</option><option>Nevím, poradíte mi</option></select></div>
+      <div class="field"><label>Popis (volitelné)</label><textarea id="f-popis" placeholder="Pár vět o vašem záměru..."></textarea></div>
       <button type="submit" class="btn btn-primary">Odeslat poptávku <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
       <p class="contact-form-foot">Odesláním souhlasíte se <a href="#">zpracováním osobních údajů</a>.</p>
     </form>
@@ -438,5 +438,23 @@
 })();
 </script>
 <script src="chatbot.js"></script>
+<script>
+/* Kontaktní formulář -> usporami-core web-lead */
+(function(){
+  var API='https://moje.usporami.cz/api/poptavka/web-lead';
+  var WEB='usporami';
+  var f=document.getElementById('leadForm'); if(!f) return;
+  function v(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=f.querySelector('button[type=submit]'); var orig=btn?btn.innerHTML:'';
+    if(btn){btn.disabled=true;btn.textContent='Odesilam...';}
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jmeno:v('f-jmeno'),email:v('f-email'),telefon:v('f-tel'),sluzba:v('f-sluzba'),popis:v('f-popis'),web:WEB})})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(){f.innerHTML='<div style="text-align:center;padding:40px 10px"><div style="font-size:48px;margin-bottom:12px">\u2705</div><h3 style="margin:0 0 6px">Dekujeme!</h3><p style="opacity:.7;font-size:14px">Ozveme se do 48 hodin.</p></div>';})
+      .catch(function(){if(btn){btn.disabled=false;btn.innerHTML=orig;}alert('Odeslani se nezdarilo. Zavolejte nam prosim na +420 777 222 199, nebo to zkuste znovu.');});
+  });
+})();
+</script>
 </body>
 </html>
