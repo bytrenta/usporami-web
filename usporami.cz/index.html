@@ -93,6 +93,22 @@
 }
 </script>
 <meta name="theme-color" content="#0E3A1F">
+<style>
+/* Moje Úsporami — header button + dropdown */
+.moje-menu{position:relative}
+.moje-menu>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:var(--forest-900);color:var(--lime-300);font-weight:800;font-size:14px;line-height:1;padding:11px 18px;border-radius:99px;border:1.5px solid var(--forest-900);transition:background .15s,transform .15s}
+.moje-menu>summary::-webkit-details-marker{display:none}
+.moje-menu>summary:hover{background:var(--forest-800);transform:translateY(-1px)}
+.moje-menu>summary svg{width:16px;height:16px}
+.moje-menu>summary .chev{transition:transform .2s}
+.moje-menu[open]>summary .chev{transform:rotate(180deg)}
+.moje-menu-pop{position:absolute;right:0;top:calc(100% + 10px);background:#fff;border:1.5px solid var(--line,#e8e8e8);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.14);min-width:240px;padding:8px;z-index:200}
+.moje-menu-pop a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;color:var(--forest-800,#10331f);font-weight:700;font-size:14px;text-decoration:none;transition:background .12s}
+.moje-menu-pop a:hover{background:var(--lime-100,#eef7e0)}
+.moje-menu-pop a svg{width:18px;height:18px;color:var(--lime-600,#5a9e1f);flex:0 0 auto}
+.moje-menu-pop a small{display:block;font-weight:500;font-size:12px;color:var(--ink-3,#8a8a8a);margin-top:2px}
+@media(max-width:720px){.moje-menu-pop{right:auto;left:0}}
+</style>
 </head>
 <body>
 
@@ -107,6 +123,23 @@
       
     </nav>
     <div class="nav-cta">
+      <details class="moje-menu">
+        <summary>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Moje Úsporami
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="moje-menu-pop">
+          <a href="https://moje.usporami.cz/portal/dodavatel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Partnerský portál<small>Pro partnery a poradce</small></span>
+          </a>
+          <a href="https://moje.usporami.cz/admin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z"/></svg>
+            <span>Admin<small>Interní systém Úsporami</small></span>
+          </a>
+        </div>
+      </details>
       <a href="tel:+420777222199" class="nav-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> 777 222 199</a>
       <a href="#kontakt" class="btn btn-dark btn-tight">Konzultace zdarma <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
