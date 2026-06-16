@@ -133,34 +133,35 @@
 /* === MOBILE RESPONSIVE PASS (Cowork 2026-06-16) === */
 @media (max-width: 820px){
   html,body{overflow-x:hidden;}
-  /* hero: skryt video, nechat tmave pozadi + overlay */
   .hero-video video{display:none!important;}
-  .hero{min-height:auto!important;padding-top:96px!important;padding-bottom:56px!important;}
-  /* vsechny gridy (vc. inline) na 1 sloupec */
+  .hero{min-height:auto!important;padding-top:132px!important;padding-bottom:56px!important;}
   [style*="grid-template-columns"]{grid-template-columns:1fr!important;}
   .skupina-grid,.programs-grid,.process-grid,.cases-grid,.testi-grid,.foot-top,.contact-grid,.hero-inner,.head{grid-template-columns:1fr!important;display:block;}
   .hero-stats{grid-template-columns:1fr 1fr!important;gap:18px!important;}
   .contact-channels{grid-template-columns:1fr 1fr!important;}
   .field-row{grid-template-columns:1fr!important;}
-  /* nav: odkazy skryte (uz v app.css), CTA zmensit + zalomit */
   .nav-links{display:none!important;}
-  .nav-cta{gap:8px!important;flex-wrap:wrap!important;justify-content:flex-end!important;}
-  .nav-tel{font-size:13px!important;}
+  /* dvouradkova hlavicka: logo nahore, plnotucna CTA rada dole */
+  .nav-inner{flex-wrap:wrap!important;row-gap:10px!important;}
+  .nav-cta{order:3!important;width:100%!important;flex-wrap:nowrap!important;gap:10px!important;}
+  /* VYRAZNE volaci tlacitko */
+  .nav-tel{flex:1 1 auto!important;justify-content:center!important;background:var(--lime-500)!important;color:var(--forest-900)!important;padding:14px 16px!important;border-radius:99px!important;font-size:17px!important;font-weight:800!important;box-shadow:0 4px 16px rgba(134,197,64,.45)!important;}
+  .nav-tel svg{color:var(--forest-900)!important;width:20px!important;height:20px!important;}
+  .nav-moje{flex:0 0 auto!important;}
+  .nav-cta .btn-dark{display:none!important;}
   .nav-logo img{height:46px!important;}
-  /* typografie + mezery */
   .hero-title{font-size:clamp(32px,8.5vw,44px)!important;line-height:1.05!important;}
   section{padding:56px 0!important;}
   .calc-result-num{font-size:40px!important;}
   .program-card.feature .program-name{font-size:30px!important;}
-  /* tlacitka pres celou sirku */
   .hero-actions,.contact-actions{width:100%;}
   .hero-actions .btn,.contact-actions .btn{width:100%!important;justify-content:center!important;}
   .contact-form{padding:26px 20px!important;}
 }
 @media (max-width: 560px){
   .wrap,.wrap-narrow,.wrap-wide{padding:0 16px!important;}
-  .nav-cta .btn-dark{display:none!important;} /* skryt "Konzultace zdarma" v hlavicce, zustava telefon + Moje Usporami */
-  .nav-moje{padding:9px 13px!important;font-size:13px!important;}
+  .nav-moje{padding:11px 14px!important;font-size:13px!important;}
+  .nav-tel{font-size:16px!important;}
   .hero-stats{grid-template-columns:1fr!important;}
   .foot-bottom{flex-direction:column!important;align-items:flex-start!important;gap:12px!important;}
 }
