@@ -88,3 +88,23 @@ Health check: `GET /api/health` → `{"status":"ok","apiKeySet":true}`.
 - Fonty z Google Fonts CDN, obrázky karet z Unsplash CDN — není třeba hostovat.
 - `partner-rk.html` má vlastní inline Herbert (ne externí `chatbot.js`).
 - Webhook `partner-rk-webhook` má whitelist Origin: `usporami.cz`, `www.usporami.cz`, `staging.usporami.cz`. Po cutoveru je `usporami.cz` živý z nového serveru — Origin sedí.
+
+---
+
+## STAV NASAZENÍ — 16. 6. 2026 (Cowork)
+
+Repo: **github.com/bytrenta/usporami-web** (public, branch `main`).
+Coolify projekt „My first project" / env `production` / server `localhost` (`uj2993zohapr0yux1lxoswk0`).
+
+| Resource | UUID | build | stav | doména |
+|---|---|---|---|---|
+| web-usporami | `uoviuzm4033drt22rzj2p3kf` | static `/usporami.cz` | running ✓ | usporami.cz, www |
+| web-dotacemi | `e37voou46effyf0rejgutgbn` | static `/dotacemi.cz` | running ✓ | dotacemi.cz, www |
+| web-energetikou | `lnixkvkw7a47xdg1uw68sd6f` | static `/energetikou.cz` | running ✓ | energetikou.cz, www |
+| web-projektem | `mlk587tsv54pr5qhxbupiq10` | static `/projektem.cz` | running ✓ | projektem.cz, www |
+| usporami-chatbot | `dv9lfongjm16cez1ic1621ti` | nixpacks `/chatbot-server` | running ✓ | api.usporami.cz |
+
+Ověřeno přes Host hlavičku (pre-DNS): 4 weby HTTP 200, chatbot `/api/health` ok + živá odpověď.
+Chatbot env: `ANTHROPIC_API_KEY` (secret) + `PORT=3001` nastaveny.
+
+**Zbývá:** (1) DNS A záznamy → `5.75.210.57` (Wedos), (2) po DNS ověřit SSL + redeploy pokud cert nenaběhne sám, (3) vypnout Netlify pro usporami.cz.
