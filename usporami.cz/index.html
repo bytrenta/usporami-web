@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Úsporami.cz — Skupina pro renovace, dotace a energetiku</title>
+<meta name="description" content="Skupina Úsporami sdružuje specialisty na dotace, energetiku a projektovou dokumentaci.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400..800;1,400..700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="foundation.css">
+<link rel="stylesheet" href="app.css">
+<style>
+.skupina-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.skupina-card{background:var(--white);border:1.5px solid var(--line);border-radius:var(--r-2xl);padding:40px 36px;position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s,border-color .3s;display:flex;flex-direction:column}
+.skupina-card:hover{transform:translateY(-8px);box-shadow:var(--sh-xl)}
+.skupina-card[data-brand="dotacemi"]:hover{border-color:rgba(232,67,147,.5);box-shadow:0 30px 70px rgba(232,67,147,.15)}
+.skupina-card[data-brand="energetikou"]:hover{border-color:rgba(139,195,74,.5);box-shadow:0 30px 70px rgba(139,195,74,.15)}
+.skupina-card[data-brand="projektem"]:hover{border-color:rgba(0,180,216,.5);box-shadow:0 30px 70px rgba(0,180,216,.15)}
+.skupina-card::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:var(--lime-100);opacity:0;transition:opacity .3s}
+.skupina-card:hover::after{opacity:.6}
+.skupina-card-inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+.skupina-logo{height:48px!important;width:auto!important;object-fit:contain!important;align-self:flex-start}
+.skupina-logo{height:52px;width:auto;margin-bottom:24px}
+.skupina-card h3{font-family:var(--f-display);font-size:26px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px}
+.skupina-card .desc{font-size:15px;color:var(--ink-3);line-height:1.55;margin-bottom:20px}
+.skupina-services{list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:8px;flex:1}
+.skupina-services li{font-size:14.5px;color:var(--ink-2);display:flex;gap:8px;align-items:center}
+.skupina-services li::before{content:"";width:6px;height:6px;border-radius:99px;flex:0 0 auto}
+.skupina-card[data-brand="dotacemi"] .skupina-services li::before{background:#E84393}
+.skupina-card[data-brand="energetikou"] .skupina-services li::before{background:var(--lime-500)}
+.skupina-card[data-brand="projektem"] .skupina-services li::before{background:#00B4D8}
+.skupina-card .btn{width:100%;margin-top:auto}
+.skupina-card[data-brand="dotacemi"] .btn{border-color:#E84393;color:#E84393}
+.skupina-card[data-brand="dotacemi"] .btn:hover{background:#E84393;color:#fff;border-color:#E84393}
+.skupina-card[data-brand="energetikou"] .btn{border-color:#8BC34A;color:#558B2F}
+.skupina-card[data-brand="energetikou"] .btn:hover{background:#8BC34A;color:#fff;border-color:#8BC34A}
+.skupina-card[data-brand="projektem"] .btn{border-color:#00B4D8;color:#0077B6}
+.skupina-card[data-brand="projektem"] .btn:hover{background:#00B4D8;color:#fff;border-color:#00B4D8}
+.group-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--white)}
+.group-stat{padding:32px;text-align:center;position:relative}
+.group-stat+.group-stat::before{content:"";position:absolute;left:0;top:20%;bottom:20%;width:1px;background:var(--line)}
+.group-stat-num{font-family:var(--f-display);font-size:clamp(36px,3vw,52px);font-weight:500;letter-spacing:-0.03em;color:var(--forest-700);line-height:1;font-feature-settings:'tnum'}
+.group-stat-num small{font-size:.45em;color:var(--ink-3)}
+.group-stat-label{font-size:14px;color:var(--ink-3);margin-top:8px;font-weight:600}
+.flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.flow-step{background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px 24px;position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
+.flow-step:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--forest-300)}
+.flow-num{font-family:var(--f-display);font-size:48px;font-weight:500;letter-spacing:-0.04em;line-height:1;color:var(--forest-200);margin-bottom:12px;font-feature-settings:'tnum'}
+.flow-step:hover .flow-num{color:var(--lime-500)}
+.flow-step h4{font-family:var(--f-display);font-size:18px;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px}
+.flow-step p{font-size:14.5px;color:var(--ink-3);line-height:1.5}
+.flow-who{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--f-mono);font-size:14px;letter-spacing:0.12em;text-transform:uppercase;color:var(--forest-600);font-weight:700}
+.flow-who::before{content:"";width:5px;height:5px;border-radius:99px;background:var(--lime-500)}
+@media(max-width:1100px){.skupina-grid{grid-template-columns:1fr}.flow-grid{grid-template-columns:repeat(3,1fr)}.group-stats{grid-template-columns:repeat(2,1fr)}.group-stat+.group-stat::before{display:none}}
+@media(max-width:720px){.flow-grid{grid-template-columns:1fr}.group-stats{grid-template-columns:1fr}}
+</style>
+<meta name="keywords" content="úsporami, dotace na renovaci, energetická renovace, NZÚ 2026, bezúročný úvěr, PENB, energetický posudek, projektová dokumentace, dotační management, renovační pas, zateplení domu, tepelné čerpadlo, fotovoltaika, dotace NZÚ, skupina úsporami">
+<meta name="author" content="Úsporami s.r.o.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://usporami.cz">
+<meta property="og:title" content="Úsporami.cz — Skupina pro renovace, dotace a energetiku">
+<meta property="og:description" content="Skupina specialistů na energetické renovace. Dotační management, energetické posudky, projektová dokumentace — vše v jedné ruce. 1 300+ klientů, 98% úspěšnost.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://usporami.cz">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Úsporami.cz — Renovace s dotací, bez papírování">
+<meta name="twitter:description" content="Skupina specialistů na energetické renovace. Dotační management, energetické posudky, projektová dokumentace.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Úsporami s.r.o.",
+  "url": "https://usporami.cz",
+  "description": "Skupina specialistů na energetické renovace — dotační management, energetické posudky a projektová dokumentace pod jednou střechou.",
+  "telephone": "+420777222199",
+  "email": "info@usporami.cz",
+  "foundingDate": "2018",
+  "numberOfEmployees": {"@type": "QuantitativeValue", "value": "15+"},
+  "address": [
+    {"@type": "PostalAddress", "streetAddress": "U Koruny 1742", "addressLocality": "Hradec Králové", "postalCode": "500 02", "addressCountry": "CZ"},
+    {"@type": "PostalAddress", "streetAddress": "Rybná 716/24", "addressLocality": "Praha", "postalCode": "110 00", "addressCountry": "CZ"}
+  ],
+  "subOrganization": [
+    {"@type": "Organization", "name": "Dotacemi s.r.o.", "url": "https://dotacemi.cz", "description": "Dotační management — příprava žádostí, administrace, ukončení dotací"},
+    {"@type": "Organization", "name": "Energetikou s.r.o.", "url": "https://energetikou.cz", "description": "Energetické posudky, PENB, audity, renovační pasy, revize"},
+    {"@type": "Organization", "name": "Projektem s.r.o.", "url": "https://projektem.cz", "description": "Projektová dokumentace, stavební povolení, legalizace, pasporty"}
+  ],
+  "knowsAbout": ["energetická renovace", "dotace NZÚ", "bezúročný úvěr", "PENB", "energetický posudek", "energetický audit", "renovační pas", "projektová dokumentace", "stavební povolení", "pasport stavby", "legalizace stavby", "zateplení", "tepelné čerpadlo", "fotovoltaika"],
+  "areaServed": {"@type": "Country", "name": "Česká republika"},
+  "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1300", "bestRating": "5"}
+}
+</script>
+<meta name="theme-color" content="#0E3A1F">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="nav-logo" aria-label="Úsporami.cz"><img src="assets/logo-usporami.png" alt="Úsporami.cz" style="height:80px;width:auto"></a>
+    <nav class="nav-links">
+      <a href="#aktuality">Aktuality</a>
+      <a href="#skupina">Skupina</a>
+      <a href="#prokoho">Pro koho</a>
+      
+      
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:+420777222199" class="nav-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> 777 222 199</a>
+      <a href="#kontakt" class="btn btn-dark btn-tight">Konzultace zdarma <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-video"><video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=70"><source src="assets/hero_usporami.mp4" type="video/mp4"></video></div>
+  <div class="hero-bg-pattern"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow dark hero-eyebrow reveal">Renovace · Dotace · Energetika · Projekce</span>
+      <h1 class="hero-title reveal reveal-d1">Renovujte<br>podle svého,<br><em>papírování nechte na nás.</em></h1>
+      <p class="hero-lead reveal reveal-d2">Skupina specialistů na energetické renovace. Vyřídíme dotaci, zpracujeme projekt, zajistíme energetický posudek a provedeme vás celým procesem — v jedné ruce.</p>
+      <div class="hero-actions reveal reveal-d3">
+        <a href="#kontakt" class="btn btn-primary btn-large">Spočítat úvěr <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="#skupina" class="btn btn-light btn-large">Poznat skupinu</a>
+      </div>
+      <div class="hero-trust reveal reveal-d4">
+        <a href="https://share.google/21Atw4lLldsuuF99B" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);padding:8px 16px 8px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.15);transition:background .2s;text-decoration:none;color:#fff" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.12)'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:700">4,8 / 5 na Google</span><span style="font-size:14px;color:rgba(255,255,255,.6)">32 recenzí →</span></span></a><span style="color:rgba(255,255,255,.5);margin:0 8px">·</span><strong>1 300+</strong> klientů<span style="color:rgba(255,255,255,.5);margin:0 8px">·</span><strong>98 %</strong> úspěšnost
+      </div>
+    </div>
+    <aside class="hero-calc reveal reveal-d3" data-calc data-default-type="rd" data-default-area="100" data-default-scope="comprehensive">
+      <div class="hero-calc-head"><div>
+        <span class="hero-calc-tag">Kalkulačka</span>
+        <h3 style="margin-top:10px">Bezúročný úvěr NZÚ 2026+</h3>
+        <p class="hero-calc-sub">Stát hradí úroky i poplatky — vy splácíte jen jistinu. Spočítejte si orientační výši úvěru.</p>
+      </div></div>
+      <div class="calc-row"><span class="calc-label">Typ nemovitosti</span><div class="calc-options"><button class="calc-opt active" data-calc-type="rd">Rodinný dům</button><button class="calc-opt" data-calc-type="bd">Bytovka / SVJ</button></div></div>
+      <div class="calc-row" id="calc-rd-inputs"><span class="calc-label">Podlahová plocha všech pater (m²)</span><div class="calc-options"><button class="calc-opt active" data-calc-area="100">100</button><button class="calc-opt" data-calc-area="170">170</button><button class="calc-opt" data-calc-area="250">250</button><button class="calc-opt" data-calc-area="300">300+</button></div></div>
+      <div class="calc-row" id="calc-bd-inputs" style="display:none">
+        <span class="calc-label">Počet bytů</span>
+        <div class="calc-options"><button class="calc-opt active" data-calc-units="8">8</button><button class="calc-opt" data-calc-units="16">16</button><button class="calc-opt" data-calc-units="24">24</button><button class="calc-opt" data-calc-units="40">40+</button></div>
+      </div>
+      <div class="calc-row"><span class="calc-label">Rozsah renovace</span><div class="calc-options"><button class="calc-opt" data-calc-scope="partial">Dílčí</button><button class="calc-opt active" data-calc-scope="comprehensive">Komplexní</button></div></div>
+      <div class="calc-result">
+        <div class="calc-result-label">Bezúročný úvěr až</div>
+        <div class="num-display calc-result-num"><span data-calc-num data-current="0">0</span> Kč</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:6px">0 % úrok · stát hradí veškeré poplatky</div>
+        <div class="calc-result-cta"><span>Nezávazný odhad</span><a href="#kontakt">Nechat kontakt <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+      </div>
+    </aside>
+  </div>
+  <div class="wrap"><div class="hero-stats reveal reveal-d4">
+    <div><div class="hero-stat-num"><span data-count="1300" data-suffix="+" data-duration="1800">0</span></div><div class="hero-stat-label">spokojených klientů</div></div>
+    <div><div class="hero-stat-num"><span data-count="2.4" data-decimals="1" data-duration="1800">0</span><small> mld. Kč</small></div><div class="hero-stat-label">vyřízených dotací</div></div>
+    <div><div class="hero-stat-num"><span data-count="98" data-duration="1800">0</span><small>%</small></div><div class="hero-stat-label">úspěšnost žádostí</div></div>
+    <div><div class="hero-stat-num"><span data-count="7" data-duration="1500">0</span><small>+</small></div><div class="hero-stat-label">let na trhu</div></div>
+  </div></div>
+</section>
+
+<div class="ticker"><div class="wrap"><div class="ticker-row"><span class="ticker-label">Důvěřují nám</span><div class="ticker-track">
+  <span class="ticker-item"><span class="dot"></span>SFŽP ČR</span>
+  <span class="ticker-item"><span class="dot"></span>Národní rozvojová banka</span>
+  <span class="ticker-item"><span class="dot"></span>MŽP</span>
+  <span class="ticker-item"><span class="dot"></span>ČSOB</span>
+  <span class="ticker-item"><span class="dot"></span>Google 4,9★</span>
+</div></div></div></div>
+
+<!-- AKTUALITY -->
+<section id="aktuality" class="section-process">
+  <div class="wrap">
+    <div class="head reveal"><div class="head-text"><span class="eyebrow">Aktuality</span><h2 class="h2" style="margin-top:18px">Co je <span class="mark">nového</span></h2></div>
+    <div class="head-aside"><p class="lead">Sledujeme vývoj dotačních programů a legislativy. Tady najdete nejdůležitější novinky.</p></div></div>
+    
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:20px">
+      <!-- Main aktualita -->
+      <div class="card reveal reveal-d1" style="grid-row:span 2;padding:0;overflow:hidden;display:flex;flex-direction:column">
+        <div style="aspect-ratio:16/10;background:var(--forest-800);position:relative;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" style="width:100%;height:100%;object-fit:cover;opacity:.7" alt="">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(14,58,31,.9) 100%)"></div>
+          <div style="position:absolute;bottom:24px;left:24px;right:24px;color:#fff">
+            <span style="font-family:var(--f-mono);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--lime-400)">25. června 2026</span>
+            <h3 style="font-family:var(--f-display);font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-top:8px;color:#fff">NZÚ 2026+ startuje</h3>
+          </div>
+        </div>
+        <div style="padding:28px;flex:1;display:flex;flex-direction:column">
+          <p style="font-size:15px;color:var(--ink-3);line-height:1.55;flex:1">Program Nová zelená úsporám vstupuje do nové etapy. Bezúročné úvěry pro běžné domácnosti, přímé dotace pro zranitelné skupiny. Příjem žádostí od 25. června 2026.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+            <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:var(--lime-100);color:var(--forest-700)">NZÚ 2026+</span>
+            <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:var(--lime-100);color:var(--forest-700)">Bezúročný úvěr</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side aktuality -->
+      <div class="card reveal reveal-d2" style="display:flex;flex-direction:column;justify-content:center">
+        <span style="font-family:var(--f-mono);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--forest-600)">Nově nabízíme</span>
+        <h4 style="font-family:var(--f-display);font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:10px 0 8px">Renovační pasy</h4>
+        <p style="font-size:14.5px;color:var(--ink-3);line-height:1.5">Nový nástroj pro plánování renovace. Naši certifikovaní poradci SFŽP jsou oprávnění k vydávání renovačních pasů — podklad pro dílčí renovace v NZÚ.</p>
+        <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:#F1F8E9;color:#558B2F;align-self:flex-start;margin-top:12px">Energetikou.cz</span>
+      </div>
+
+      <div class="card reveal reveal-d3" style="display:flex;flex-direction:column;justify-content:center">
+        <span style="font-family:var(--f-mono);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--forest-600)">Pro domácnosti</span>
+        <h4 style="font-family:var(--f-display);font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:10px 0 8px">Energetické poradenství zdarma</h4>
+        <p style="font-size:14.5px;color:var(--ink-3);line-height:1.5">Certifikovaný poradce přímo u vás doma. Pro domácnosti ohrožené energetickou chudobou zcela bezplatně.</p>
+        <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:#F1F8E9;color:#558B2F;align-self:flex-start;margin-top:12px">Energetikou.cz</span>
+      </div>
+
+      <div class="card reveal reveal-d2" style="display:flex;flex-direction:column;justify-content:center">
+        <span style="font-family:var(--f-mono);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--forest-600)">Bezúročně</span>
+        <h4 style="font-family:var(--f-display);font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:10px 0 8px">Úvěr na renovaci s 0% úrokem</h4>
+        <p style="font-size:14.5px;color:var(--ink-3);line-height:1.5">Stát uhradí veškeré úroky a poplatky. Na komplexní renovaci RD až 2 mil. Kč, u bytovek až 750 tis. Kč/byt.</p>
+        <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:#FCE4EC;color:#C2185B;align-self:flex-start;margin-top:12px">Dotacemi.cz</span>
+      </div>
+
+      <div class="card reveal reveal-d3" style="display:flex;flex-direction:column;justify-content:center">
+        <span style="font-family:var(--f-mono);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--forest-600)">Kompletní dokumentace</span>
+        <h4 style="font-family:var(--f-display);font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:10px 0 8px">Vše pro NZÚ na jednom místě</h4>
+        <p style="font-size:14.5px;color:var(--ink-3);line-height:1.5">Energetický posudek, projektová dokumentace i žádost o dotaci. Tři firmy, jeden tým — bez hledání dalších dodavatelů.</p>
+        <span style="font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;background:#E0F7FA;color:#0077B6;align-self:flex-start;margin-top:12px">Projektem.cz</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SKUPINA -->
+<section id="skupina">
+  <div class="wrap">
+    <div class="head reveal"><div class="head-text"><span class="eyebrow">Skupina Úsporami</span><h2 class="h2" style="margin-top:18px">Tři specializované firmy,<br><span class="mark">jeden tým.</span></h2></div>
+    <div class="head-aside"><p class="lead">Každá firma ve skupině se soustředí na svůj obor. Dohromady pokrýváme celý proces renovace — od energetického posouzení přes projekt a dotaci až po proplacení.</p></div></div>
+    <div class="skupina-grid">
+      <div class="skupina-card reveal reveal-d1" data-brand="dotacemi"><div class="skupina-card-inner">
+        <img src="logo-dotacemi.png" alt="Dotacemi.cz" class="skupina-logo" onerror="this.style.display='none'">
+        <h3>Dotační management</h3>
+        <p class="desc">Kompletní administrace dotací od přípravy žádosti přes realizaci až po úspěšné ukončení a proplacení. 1 300+ podaných žádostí s 98% úspěšností. Specializace na NZÚ 2026+ — bezúročný úvěr na renovace, NZÚ Light pro zranitelné domácnosti, poradenství.</p>
+        <ul class="skupina-services"><li>Posouzení nároku na dotaci</li><li>Příprava a podání žádosti</li><li>Administrace a monitorovací zprávy</li><li>Ukončení dotace a proplacení</li><li>NZÚ, NZÚ Light, ENERG, OPŽP</li></ul>
+        <a href="../Web Dotacemi.cz/index.html" class="btn btn-ghost">Dotacemi.cz <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div></div>
+      <div class="skupina-card reveal reveal-d2" data-brand="energetikou" style="border-color:rgba(139,195,74,.2);background:linear-gradient(160deg,#fff 0%,#F1F8E9 100%)"><div class="skupina-card-inner">
+        <img src="logo-energetikou.png" alt="Energetikou.cz" class="skupina-logo">
+        <h3>Energetika budov</h3>
+        <p class="desc">Certifikovaní energetičtí specialisté. Zpracujeme PENB, energetický posudek pro dotaci, audit, renovační pas i revizi otopné soustavy. Přes 1 000 posudků na dotace NZÚ.</p>
+        <ul class="skupina-services"><li>PENB — průkaz energetické náročnosti</li><li>Energetický posudek pro NZÚ, OPŽP</li><li>Energetický audit</li><li>Renovační pas (nově od 2026)</li><li>Revize otopných soustav</li></ul>
+        <a href="../Web Energetikou.cz/index.html" class="btn btn-ghost">Energetikou.cz <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div></div>
+      <div class="skupina-card reveal reveal-d3" data-brand="projektem"><div class="skupina-card-inner">
+        <img src="logo-projektem.png" alt="Projektem.cz" class="skupina-logo" onerror="this.style.display='none'">
+        <h3>Projektová dokumentace</h3>
+        <p class="desc">Autorizovaní projektanti ČKAIT. Projektová dokumentace pro stavební povolení, dotační dokumentace, legalizace staveb, pasporty budov, statika i prováděcí PD. Přes 1 000 nakreslených výkresů.</p>
+        <ul class="skupina-services"><li>Projekt pro stavební povolení (DSP)</li><li>Dotační dokumentace (NZÚ, OPŽP)</li><li>Pasportizace staveb a zaměření</li><li>Legalizace staveb</li><li>Statické posouzení a prováděcí PD</li></ul>
+        <a href="../Web Projektem.cz/index.html" class="btn btn-ghost">Projektem.cz <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div></div>
+    </div>
+    <div class="group-stats reveal" style="margin-top:48px">
+      <div class="group-stat"><div class="group-stat-num"><span data-count="1300" data-suffix="+" data-duration="1800">0</span></div><div class="group-stat-label">Dokončených projektů</div></div>
+      <div class="group-stat"><div class="group-stat-num"><span data-count="1000" data-suffix="+" data-duration="1800">0</span></div><div class="group-stat-label">Energetických posudků</div></div>
+      <div class="group-stat"><div class="group-stat-num"><span data-count="1000" data-suffix="+" data-duration="1800">0</span></div><div class="group-stat-label">Nakreslených výkresů</div></div>
+      <div class="group-stat"><div class="group-stat-num">98<small>%</small></div><div class="group-stat-label">Úspěšnost žádostí</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO KOHO -->
+<section id="prokoho" style="background:var(--forest-800);color:#fff;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(40% 30% at 90% 10%,rgba(134,197,64,.12) 0%,transparent 60%),radial-gradient(35% 30% at 10% 95%,rgba(134,197,64,.08) 0%,transparent 60%);pointer-events:none"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="head reveal"><div class="head-text"><span class="eyebrow dark">Pro koho pracujeme</span><h2 class="h2" style="margin-top:18px;color:#fff">Jeden tým pro <span class="mark dark">každý typ budovy</span></h2></div>
+    <div class="head-aside"><p class="lead" style="color:rgba(255,255,255,.78)">Rodinný dům, bytovka, firma nebo obec — pro každého najdeme správný program, zpracujeme projekt a posudek, a dotáhneme to až k proplacení.</p></div></div>
+    
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px 28px;transition:transform .3s,background .25s,border-color .25s" class="reveal reveal-d1" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(134,197,64,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.12)';this.style.transform='none'">
+        <div style="width:56px;height:56px;border-radius:16px;background:rgba(134,197,64,.15);color:var(--lime-400);display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3 style="font-family:var(--f-display);font-size:24px;font-weight:600;color:#fff;margin-bottom:8px">Rodinné domy</h3>
+        <p style="font-size:14.5px;color:rgba(255,255,255,.7);line-height:1.5">Zateplení, tepelné čerpadlo, fotovoltaika, rekuperace. Bezúročný úvěr NZÚ až 2 mil. Kč.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px 28px;transition:transform .3s,background .25s,border-color .25s" class="reveal reveal-d2" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(134,197,64,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.12)';this.style.transform='none'">
+        <div style="width:56px;height:56px;border-radius:16px;background:rgba(134,197,64,.15);color:var(--lime-400);display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
+        <h3 style="font-family:var(--f-display);font-size:24px;font-weight:600;color:#fff;margin-bottom:8px">Bytové domy & SVJ</h3>
+        <p style="font-size:14.5px;color:rgba(255,255,255,.7);line-height:1.5">Komplexní renovace bytovek. Bezúročný úvěr až 750 tis. Kč/byt. Bonus pro zranitelné domácnosti.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px 28px;transition:transform .3s,background .25s,border-color .25s" class="reveal reveal-d3" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(134,197,64,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.12)';this.style.transform='none'">
+        <div style="width:56px;height:56px;border-radius:16px;background:rgba(134,197,64,.15);color:var(--lime-400);display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg></div>
+        <h3 style="font-family:var(--f-display);font-size:24px;font-weight:600;color:#fff;margin-bottom:8px">Firmy & podnikatelé</h3>
+        <p style="font-size:14.5px;color:rgba(255,255,255,.7);line-height:1.5">Bezúročný úvěr ENERG až 60 mil. Kč. Bonus 20 % při prokázání energetických úspor.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px 28px;transition:transform .3s,background .25s,border-color .25s" class="reveal reveal-d4" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(134,197,64,.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.12)';this.style.transform='none'">
+        <div style="width:56px;height:56px;border-radius:16px;background:rgba(134,197,64,.15);color:var(--lime-400);display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 style="font-family:var(--f-display);font-size:24px;font-weight:600;color:#fff;margin-bottom:8px">Obce & instituce</h3>
+        <p style="font-size:14.5px;color:rgba(255,255,255,.7);line-height:1.5">OPŽP, Modernizační fond. Energetické projekty veřejných budov s dotací až 80 %.</p>
+      </div>
+    </div>
+    
+    <div style="text-align:center;margin-top:48px" class="reveal"><a href="#kontakt" class="btn btn-primary">Zjistit, co je pro vás <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+  </div>
+</section>
+
+<!-- REFERENCE -->
+
+
+
+
+<!-- CONTACT -->
+<section id="kontakt" class="section-contact">
+  <div class="wrap"><div class="contact-grid">
+    <div class="contact-text reveal"><span class="eyebrow dark">Začněte ještě dnes</span><h2 class="h2" style="margin-top:18px;color:#fff">Spočítáme vám dotaci<br><span style="color:var(--lime-300);font-style:italic">do 48 hodin.</span></h2><p class="lead">Pošlete nám pár informací — nebo zavolejte rovnou. Konzultace je zdarma a bez závazků.</p>
+      <div class="contact-actions"><a href="tel:+420777222199" class="btn btn-primary btn-large"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> 777 222 199</a></div>
+      <div class="contact-channels"><div class="contact-channel"><div class="contact-channel-label">E-mail</div><div class="contact-channel-value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> info@usporami.cz</div></div><div class="contact-channel"><div class="contact-channel-label">Kanceláře</div><div class="contact-channel-value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> HK · Praha</div></div></div>
+    </div>
+    <form class="contact-form reveal reveal-d1" onsubmit="event.preventDefault();alert('Děkujeme! Ozveme se do 48 hodin.')">
+      <h3>Bezplatná kalkulace</h3><p class="sub">Vyplňte formulář — ozveme se do 48 hodin.</p>
+      <div class="field-row"><div class="field"><label>Jméno</label><input type="text" placeholder="Jan Novák" required></div><div class="field"><label>Telefon</label><input type="tel" placeholder="+420 ..." required></div></div>
+      <div class="field"><label>E-mail</label><input type="email" placeholder="vy@example.cz" required></div>
+      <div class="field"><label>Co potřebujete</label><select><option>Bezúročný úvěr NZÚ</option><option>NZÚ Light (dotace)</option><option>Ukončení dotace</option><option>PENB — průkaz energetické náročnosti</option><option>Energetický audit</option><option>Renovační pas</option><option>Revize otopné soustavy</option><option>Pasport stavby</option><option>Dokumentace pro stavební povolení</option><option>Stavební dozor</option><option>Legalizace stavby</option><option>Nevím, poradíte mi</option></select></div>
+      <div class="field"><label>Popis (volitelné)</label><textarea placeholder="Pár vět o vašem záměru..."></textarea></div>
+      <button type="submit" class="btn btn-primary">Odeslat poptávku <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      <p class="contact-form-foot">Odesláním souhlasíte se <a href="#">zpracováním osobních údajů</a>.</p>
+    </form>
+  </div></div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-top">
+    <div><img src="assets/logo-usporami.png" alt="Úsporami.cz" style="height:48px;width:auto;filter:brightness(0) invert(1);margin-bottom:18px"><p class="foot-tagline">Skupina specialistů na dotace, energetické úspory a renovace.</p></div>
+    <div class="foot-col"><h5>Skupina</h5><ul><li><a href="../Web Dotacemi.cz/index.html">Dotacemi.cz</a></li><li><a href="../Web Energetikou.cz/index.html">Energetikou.cz</a></li><li><a href="../Web Projektem.cz/index.html">Projektem.cz</a></li></ul></div>
+    <div class="foot-col"><h5>Pro koho</h5><ul><li><a href="#">Rodinné domy</a></li><li><a href="#">Bytové domy a SVJ</a></li><li><a href="#">Firmy</a></li><li><a href="#">Obce</a></li></ul></div>
+  </div>
+  <div class="foot-bottom"><div>&copy; 2026 Úsporami s.r.o. · IČ 07658273</div><div class="foot-bottom-links"><a href="#">Ochrana údajů</a><a href="#">Cookies</a></div></div>
+</div></footer>
+
+<script src="app.js"></script>
+<script>
+// Override calculator with bezúročný úvěr logic (NZÚ 2026+)
+(function(){
+  const calc = document.querySelector('[data-calc]');
+  if (!calc) return;
+  
+  const state = {
+    type: 'rd',
+    area: 100,
+    units: 8,
+    scope: 'comprehensive'
+  };
+
+  // Max loan amounts from NZÚ 2026+
+  // RD dílčí: max 750 000, RD komplexní: max 2 000 000
+  // BD dílčí: max 250 000/byt, BD komplexní: max 750 000/byt
+  // Firma: ENERG max 60 000 000
+  function compute() {
+    let amount = 0;
+    const rdInputs = document.getElementById('calc-rd-inputs');
+    const bdInputs = document.getElementById('calc-bd-inputs');
+    if (state.type === 'rd') {
+      rdInputs.style.display = '';
+      bdInputs.style.display = 'none';
+      if (state.scope === 'partial') {
+        amount = Math.min(state.area * 3500, 750000);
+      } else {
+        amount = Math.min(state.area * 8500, 2000000);
+      }
+    } else if (state.type === 'bd') {
+      rdInputs.style.display = 'none';
+      bdInputs.style.display = '';
+      if (state.scope === 'partial') {
+        amount = state.units * 250000;
+      } else {
+        amount = state.units * 750000;
+      }
+    }
+    
+    // Round to nearest 10k
+    amount = Math.round(amount / 10000) * 10000;
+    
+    const numEl = calc.querySelector('[data-calc-num]');
+    if (numEl) {
+      const start = parseFloat(numEl.dataset.current || '0');
+      const target = amount;
+      const dur = 600;
+      const t0 = performance.now();
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      function step(now) {
+        const t = Math.min(1, (now - t0) / dur);
+        const v = start + (target - start) * easeOut(t);
+        numEl.textContent = Math.round(v).toLocaleString('cs-CZ');
+        if (t < 1) requestAnimationFrame(step);
+        else numEl.dataset.current = target;
+      }
+      requestAnimationFrame(step);
+    }
+  }
+
+  // Re-bind buttons (override app.js bindings)
+  calc.querySelectorAll('[data-calc-type]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      calc.querySelectorAll('[data-calc-type]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.type = btn.dataset.calcType;
+      compute();
+    });
+  });
+  calc.querySelectorAll('[data-calc-area]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      calc.querySelectorAll('[data-calc-area]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.area = parseInt(btn.dataset.calcArea, 10);
+      compute();
+    });
+  });
+  calc.querySelectorAll('[data-calc-scope]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      calc.querySelectorAll('[data-calc-scope]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.scope = btn.dataset.calcScope;
+      compute();
+    });
+  });
+
+  calc.querySelectorAll('[data-calc-units]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      calc.querySelectorAll('[data-calc-units]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.units = parseInt(btn.dataset.calcUnits, 10);
+      compute();
+    });
+  });
+
+  setTimeout(compute, 500);
+})();
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

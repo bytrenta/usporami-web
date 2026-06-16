@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partnerství pro realitní kanceláře | Úsporami.cz</title>
+<meta name="description" content="Prémiové služby pro realitní kanceláře — pasporty nemovitostí, PENB, expresní dodání, zvýhodněné ceny.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400..800;1,400..700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--forest-900:#061B0C;--forest-800:#0E3A1F;--forest-700:#154A29;--lime-500:#86C540;--lime-400:#A4D962;--lime-300:#C4E690;--lime-100:#EEF8DC;--ink:#0A1A0E;--ink2:#2A3A2E;--ink3:#5C6B5F;--paper:#F8F7F2;--white:#fff;--line:rgba(10,26,14,.10);--r-lg:20px;--r-xl:28px;--r-pill:999px;--sh-md:0 8px 20px rgba(10,26,14,.08),0 2px 6px rgba(10,26,14,.04);--sh-lg:0 18px 40px rgba(10,26,14,.10),0 6px 14px rgba(10,26,14,.06)}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Inter Tight','Manrope',sans-serif;font-weight:600;letter-spacing:-0.02em}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+section{padding:80px 0}
+
+/* NAV */
+.nav{padding:20px 0;background:rgba(248,247,242,.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{height:40px;width:auto}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-tel{font-weight:700;font-size:14px;color:var(--ink);display:flex;align-items:center;gap:6px}
+.nav-tel svg{width:16px;height:16px;color:var(--lime-500)}
+
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;font-family:'Manrope';font-weight:700;font-size:15px;border-radius:var(--r-pill);border:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn-primary{background:var(--lime-500);color:var(--forest-900);box-shadow:0 6px 18px rgba(134,197,64,.35)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(134,197,64,.45)}
+.btn-dark{background:var(--forest-800);color:#fff;box-shadow:var(--sh-md)}.btn-dark:hover{transform:translateY(-2px);background:var(--forest-700)}
+.btn-ghost{background:transparent;color:var(--forest-800);border:1.5px solid var(--forest-800)}.btn-ghost:hover{background:var(--forest-800);color:#fff}
+
+/* HERO */
+.hero{background:var(--forest-900);color:#fff;padding:100px 0 80px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(134,197,64,.1),transparent 70%)}
+.hero::after{content:"";position:absolute;bottom:-80px;left:30%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(134,197,64,.06),transparent 70%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:center}
+.hero-text .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.1);padding:8px 16px;border-radius:var(--r-pill);border:1px solid rgba(255,255,255,.12);margin-bottom:24px}
+.hero-text .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime-500)}
+.hero h1{font-size:clamp(36px,5vw,52px);font-weight:700;line-height:.98;letter-spacing:-0.04em}
+.hero h1 em{font-style:italic;color:var(--lime-500);font-weight:500}
+.hero-lead{font-size:16px;color:rgba(255,255,255,.75);line-height:1.6;margin:20px 0 32px;max-width:500px}
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.hero-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;text-align:center}
+.hero-stat .num{font-family:'Inter Tight';font-size:28px;font-weight:700;color:var(--lime-500)}
+.hero-stat .lbl{font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+
+/* BENEFITS */
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.benefit{background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;text-align:center;transition:transform .3s,box-shadow .3s}
+.benefit:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
+.benefit-icon{width:56px;height:56px;border-radius:16px;background:var(--lime-100);color:var(--forest-700);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px}
+.benefit h4{font-size:15px;margin-bottom:6px}.benefit p{font-size:12px;color:var(--ink3);line-height:1.5}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.service{background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);padding:32px;transition:transform .3s,box-shadow .3s,border-color .3s}
+.service:hover{transform:translateY(-6px);box-shadow:var(--sh-lg);border-color:rgba(134,197,64,.3)}
+.service-icon{width:48px;height:48px;border-radius:14px;background:var(--lime-100);color:var(--forest-700);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
+.service h3{font-size:18px;margin-bottom:8px}.service p{font-size:13px;color:var(--ink3);line-height:1.55}
+
+/* PROCESS */
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.step{background:var(--white);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;transition:transform .3s,box-shadow .3s}
+.step:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.step-num{font-family:'Inter Tight';font-size:48px;font-weight:500;color:rgba(134,197,64,.25);letter-spacing:-0.04em;line-height:1}
+.step:hover .step-num{color:var(--lime-500)}
+.step h4{font-size:16px;margin:8px 0 6px}.step p{font-size:12px;color:var(--ink3);line-height:1.5}
+
+/* WHY */
+.why{background:var(--forest-800);color:#fff;border-radius:var(--r-xl);padding:40px;margin-top:48px}
+.why h3{font-size:20px;margin-bottom:20px}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.why-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.85)}
+.why-item::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime-500);flex:0 0 auto}
+
+/* FORM */
+.form-section{background:var(--forest-900);color:#fff;position:relative;overflow:hidden}
+.form-section::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 40% at 70% 30%,rgba(134,197,64,.12),transparent 60%);pointer-events:none}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative;z-index:1}
+.form-text h2{font-size:32px;color:#fff;margin-top:16px;line-height:1.05}.form-text h2 em{color:var(--lime-500);font-style:italic;font-weight:500}
+.form-text .lead{color:rgba(255,255,255,.7);font-size:14px;line-height:1.6;margin-top:16px}
+.form-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:36px;backdrop-filter:blur(8px)}
+.form-card h3{font-size:20px;color:#fff;margin-bottom:6px}.form-card .sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:#fff;font-size:14px;font-family:inherit;transition:border-color .2s}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.35)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--lime-500);background:rgba(255,255,255,.12);box-shadow:0 0 0 4px rgba(134,197,64,.15)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.field select option{background:#1a2e1a;color:#fff}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field textarea{resize:vertical;min-height:80px}
+.field-check{display:flex;gap:10px;align-items:flex-start;font-size:11px;color:rgba(255,255,255,.6);margin:20px 0}
+.field-check input{margin-top:2px;accent-color:var(--lime-500)}
+.form-submit{width:100%;padding:16px;background:var(--lime-500);color:var(--forest-900);font-family:inherit;font-size:16px;font-weight:700;border:none;border-radius:var(--r-pill);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(134,197,64,.4)}
+
+/* FOOTER */
+.footer{background:var(--forest-900);color:rgba(255,255,255,.6);padding:40px 0;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-brand{font-family:'Inter Tight';font-size:18px;font-weight:600;color:#fff}
+.footer-links{display:flex;gap:20px;font-size:12px}
+.footer-links a:hover{color:#fff}
+
+.eyebrow-light{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--forest-700);background:var(--lime-100);padding:8px 16px;border-radius:var(--r-pill)}
+.eyebrow-light::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime-500)}
+
+.head{margin-bottom:40px}.head h2{font-size:32px;margin-top:12px;letter-spacing:-0.03em}
+
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .benefits{grid-template-columns:1fr 1fr}
+  .services-grid,.process-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" style="padding:0;background:var(--forest-900)">
+  <div style="background:var(--forest-800);padding:10px 0">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:center;gap:28px">
+      <img src="logo-usporami.png" alt="Úsporami.cz" style="height:44px;width:auto;filter:brightness(0) invert(1)">
+      <div style="width:1px;height:24px;background:rgba(255,255,255,.2)"></div>
+      <img src="logo-dotacemi.png" alt="Dotacemi.cz" style="height:26px;width:auto;filter:brightness(0) invert(1)">
+      <img src="logo-energetikou.png" alt="Energetikou.cz" style="height:26px;width:auto;filter:brightness(0) invert(1)">
+      <img src="logo-projektem.png" alt="Projektem.cz" style="height:26px;width:auto;filter:brightness(0) invert(1)">
+    </div>
+  </div>
+  <div style="background:rgba(248,247,242,.95);backdrop-filter:blur(12px);padding:14px 0;border-bottom:1px solid var(--line)">
+  <div class="wrap nav-inner">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="font-family:'Inter Tight';font-size:18px;font-weight:700;color:var(--forest-800);letter-spacing:-0.02em">Partnerský program</div>
+    <div style="background:var(--lime-500);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px;letter-spacing:.05em">PRO RK</div>
+  </div>
+  <div class="nav-right">
+    <a href="tel:+420777222199" class="nav-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> 777 222 199</a>
+    <a href="#formular" class="btn btn-dark" style="padding:12px 20px;font-size:13px">Poslat poptávku →</a>
+  </div>
+</div></div></header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="eyebrow">Partnerský program</span>
+      <h1>Prémiové služby<br>pro realitní<br><em>kanceláře.</em></h1>
+      <p class="hero-lead">Spolupracujeme s projektem Realiťák roku. Nabízíme vašim klientům kompletní technické služby — pasporty, PENB a projekční dokumentaci. Rychle, profesionálně a za zvýhodněných podmínek.</p>
+      <a href="#formular" class="btn btn-primary">Poslat poptávku →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">1 300+</div><div class="lbl">Zakázek</div></div>
+      <div class="hero-stat"><div class="num">5 dnů</div><div class="lbl">Expresní dodání</div></div>
+      <div class="hero-stat"><div class="num">2018</div><div class="lbl">Na trhu od</div></div>
+      <div class="hero-stat"><div class="num">🏆</div><div class="lbl">Partner Realiťák roku</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:48px 0"><div class="wrap">
+  <div class="benefits" style="grid-template-columns:repeat(4,1fr)">
+    <div class="benefit" style="background:transparent;border:none;padding:0;text-align:left;display:flex;gap:16px;align-items:flex-start">
+      <div style="width:56px;height:56px;border-radius:16px;overflow:hidden;flex:0 0 auto"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=120&q=80" style="width:100%;height:100%;object-fit:cover"></div>
+      <div><h4 style="font-size:14px;margin-bottom:4px">Expresní dodání</h4><p style="font-size:11px;color:var(--ink3)">Přednostní zpracování — pasport do 5 pracovních dnů</p></div>
+    </div>
+    <div class="benefit" style="background:transparent;border:none;padding:0;text-align:left;display:flex;gap:16px;align-items:flex-start">
+      <div style="width:56px;height:56px;border-radius:16px;overflow:hidden;flex:0 0 auto"><img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=120&q=80" style="width:100%;height:100%;object-fit:cover"></div>
+      <div><h4 style="font-size:14px;margin-bottom:4px">Zvýhodněné ceny</h4><p style="font-size:11px;color:var(--ink3)">Speciální ceník pro partnerské realitní kanceláře</p></div>
+    </div>
+    <div class="benefit" style="background:transparent;border:none;padding:0;text-align:left;display:flex;gap:16px;align-items:flex-start">
+      <div style="width:56px;height:56px;border-radius:16px;overflow:hidden;flex:0 0 auto"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=120&q=80" style="width:100%;height:100%;object-fit:cover"></div>
+      <div><h4 style="font-size:14px;margin-bottom:4px">Dedikovaný kontakt</h4><p style="font-size:11px;color:var(--ink3)">Přímá linka na vašeho specialistu</p></div>
+    </div>
+    <div class="benefit" style="background:transparent;border:none;padding:0;text-align:left;display:flex;gap:16px;align-items:flex-start">
+      <div style="width:56px;height:56px;border-radius:16px;overflow:hidden;flex:0 0 auto"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=120&q=80" style="width:100%;height:100%;object-fit:cover"></div>
+      <div><h4 style="font-size:14px;margin-bottom:4px">Kompletní servis</h4><p style="font-size:11px;color:var(--ink3)">Od pasportu přes PENB po projektovou dokumentaci</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section style="background:var(--paper);padding:80px 0"><div class="wrap">
+  <div class="head"><span class="eyebrow-light">Co nabízíme</span><h2>Služby pro vaše klienty</h2><p style="font-size:14px;color:var(--ink3);margin-top:8px;max-width:500px">Kompletní technické zázemí pro hladký průběh prodeje nebo pronájmu.</p></div>
+  <div class="services-grid">
+    <div class="service" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer" onclick="window.herbertAsk('Pasport nemovitosti pro realitní kancelář')">
+      <div style="height:160px;overflow:hidden;position:relative"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .4s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(14,58,31,.7) 100%)"></div><div style="position:absolute;bottom:12px;left:16px;color:#fff;font-family:'Inter Tight';font-size:18px;font-weight:700">Pasport nemovitosti</div></div>
+      <div style="padding:20px"><p style="font-size:13px;color:var(--ink3);line-height:1.55">Kompletní dokumentace skutečného stavu — zaměření, výkresy, technická zpráva. Nezbytné při prodeji starších nemovitostí bez projektové dokumentace.</p></div>
+    </div>
+    <div class="service" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer" onclick="window.herbertAsk('PENB průkaz energetické náročnosti pro realitku')">
+      <div style="height:160px;overflow:hidden;position:relative"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .4s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(14,58,31,.7) 100%)"></div><div style="position:absolute;bottom:12px;left:16px;color:#fff;font-family:'Inter Tight';font-size:18px;font-weight:700">PENB</div></div>
+      <div style="padding:20px"><p style="font-size:13px;color:var(--ink3);line-height:1.55">Průkaz energetické náročnosti je ze zákona povinný při prodeji i pronájmu. Zpracování certifikovaným specialistou v nejkratším termínu.</p></div>
+    </div>
+    <div class="service" style="padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer" onclick="window.herbertAsk('Projekční dokumentace pro realitní kancelář')">
+      <div style="height:160px;overflow:hidden;position:relative"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .4s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(14,58,31,.7) 100%)"></div><div style="position:absolute;bottom:12px;left:16px;color:#fff;font-family:'Inter Tight';font-size:18px;font-weight:700">Projekční dokumentace</div></div>
+      <div style="padding:20px"><p style="font-size:13px;color:var(--ink3);line-height:1.55">Projekt pro rekonstrukci, stavební povolení nebo dotaci. Náš projektový tým zpracuje dokumentaci v požadovaném rozsahu.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="head"><span class="eyebrow-light">Jak to funguje</span><h2>Jednoduché jako 1-2-3</h2></div>
+  <div class="process-grid">
+    <div class="step"><div class="step-num">01</div><h4>Vyplníte formulář</h4><p>Základní informace o nemovitosti a požadovaných službách. Stačí 2 minuty.</p></div>
+    <div class="step"><div class="step-num">02</div><h4>Ozveme se do 48 hodin</h4><p>Náš specialista vás kontaktuje, upřesní detaily a potvrdí termín i cenu.</p></div>
+    <div class="step"><div class="step-num">03</div><h4>Obdržíte dokumentaci</h4><p>Zpracujeme podklady a doručíme kompletní dokumentaci v dohodnutém termínu.</p></div>
+  </div>
+  <div class="why">
+    <h3>Proč realitky volí nás?</h3>
+    <div class="why-grid">
+      <div class="why-item">Partnerství s projektem Realiťák roku</div>
+      <div class="why-item">Expresní zpracování — přednost před standardními zakázkami</div>
+      <div class="why-item">Zvýhodněný ceník pro pravidelné partnery</div>
+      <div class="why-item">Jeden kontakt pro všechny technické služby</div>
+      <div class="why-item">Digitální předání dokumentace</div>
+      <div class="why-item">Možnost fakturace přímo na klienta</div>
+    </div>
+  </div>
+</div></section>
+
+<section class="form-section" id="formular"><div class="wrap">
+  <div class="form-grid">
+    <div class="form-text">
+      <span class="eyebrow" style="color:#fff;background:rgba(255,255,255,.1);padding:8px 16px;border-radius:99px;border:1px solid rgba(255,255,255,.12)">Poptávkový formulář</span>
+      <h2>Máte nemovitost<br><em>bez dokumentace?</em></h2>
+      <p class="lead">Vyplňte formulář a do 48 hodin se vám ozveme s nabídkou. Nebo zavolejte rovnou.</p>
+      <div style="margin-top:32px">
+        <a href="tel:+420777222199" class="btn btn-primary" style="margin-bottom:12px">📞 +420 777 222 199</a>
+        <p style="font-size:12px;color:rgba(255,255,255,.5);margin-top:8px">Po–Pá 8:00–17:00</p>
+      </div>
+    </div>
+    <form id="rkForm" class="form-card">
+      <h3>Odešlete poptávku</h3>
+      <p class="sub">Odpovíme do 48 hodin.</p>
+      <div class="field-row">
+        <div class="field"><label>Jméno a příjmení *</label><input id="f-jmeno" type="text" placeholder="Jan Novák" required></div>
+        <div class="field"><label>Realitní kancelář</label><input id="f-rk" type="text" placeholder="Název RK"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>E-mail *</label><input id="f-email" type="email" placeholder="vy@example.cz" required></div>
+        <div class="field"><label>Telefon *</label><input id="f-tel" type="tel" placeholder="+420 ..." required></div>
+      </div>
+      <div class="field"><label>Typ služby *</label>
+        <select id="f-sluzba" required><option value="">Vyberte typ služby</option><option value="pasport">Pasport nemovitosti</option><option value="penb">PENB</option><option value="pasport_penb">Pasport + PENB</option><option value="projekt">Projekční dokumentace</option><option value="jine">Jiné / kombinace</option></select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Typ nemovitosti *</label>
+          <select id="f-nemovitost" required><option value="">Vyberte typ</option><option value="rd">Rodinný dům</option><option value="bd">Bytový dům</option><option value="komercni">Komerční objekt</option><option value="jiny">Jiný</option></select>
+        </div>
+        <div class="field"><label>Město *</label><input id="f-mesto" type="text" placeholder="Hradec Králové" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Adresa nemovitosti *</label><input id="f-adresa" type="text" placeholder="Ulice a č.p." required></div>
+        <div class="field"><label>PSČ</label><input id="f-psc" type="text" placeholder="500 02" maxlength="10"></div>
+      </div>
+      <div class="field"><label>Poznámka</label><textarea id="f-poznamka" placeholder="Doplňující informace..."></textarea></div>
+      <div class="field-check"><input id="f-gdpr" type="checkbox" required><span>Souhlasím se <a href="https://usporami.cz/#gdpr" style="color:inherit;text-decoration:underline">zpracováním osobních údajů</a> za účelem vyřízení poptávky.</span></div>
+      <button type="submit" class="form-submit" id="f-submit">Odeslat poptávku →</button>
+    </form>
+  </div>
+</div></section>
+
+<footer class="footer"><div class="wrap footer-inner">
+  <img src="logo-usporami.png" alt="Úsporami.cz" style="height:36px;width:auto;filter:brightness(0) invert(1)">
+  <div class="footer-links">
+    <a href="https://usporami.cz">usporami.cz</a>
+    <a href="https://dotacemi.cz">dotacemi.cz</a>
+    <a href="https://energetikou.cz">energetikou.cz</a>
+    <a href="https://projektem.cz">projektem.cz</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,.35);width:100%;text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06)">© 2026 Úsporami s.r.o. · IČ 07658273</div>
+</div></footer>
+
+<script>
+/* HERBERT — same as Úsporami site */
+(function(){
+  const API_URL = 'https://api.usporami.cz/api/chat';
+  const SESSION_ID = 'ses_' + Math.random().toString(36).substr(2, 12);
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .chatbot-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;width:64px;height:64px;border-radius:50%;background:#86C540;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .2s,box-shadow .2s;border:none;font-size:28px}
+    .chatbot-bubble:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+    .chatbot-bubble.open{transform:scale(0);pointer-events:none}
+    .chatbot-bubble.pulse{animation:bubblePulse 2s ease-in-out infinite}
+    .chatbot-badge{position:absolute;top:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:#ff3b30;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;animation:badgePop .3s ease}
+    @keyframes bubblePulse{0%,100%{box-shadow:0 8px 24px rgba(0,0,0,.2)}50%{box-shadow:0 8px 24px rgba(0,0,0,.2),0 0 0 12px rgba(134,197,64,.15)}}
+    @keyframes badgePop{from{transform:scale(0)}to{transform:scale(1)}}
+    .chatbot-tooltip{position:fixed;bottom:96px;right:24px;z-index:9999;background:#fff;color:#1a1a2e;padding:14px 20px;border-radius:16px 16px 4px 16px;box-shadow:0 8px 30px rgba(0,0,0,.15);font-size:14px;font-weight:600;max-width:260px;animation:tooltipIn .4s ease;cursor:pointer}
+    .chatbot-tooltip:hover{background:#f9f9f9}
+    .chatbot-tooltip .close-tip{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#ddd;color:#666;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
+    @keyframes tooltipIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .chatbot-panel{position:fixed;bottom:24px;right:24px;z-index:9998;width:420px;max-width:calc(100vw - 32px);height:620px;max-height:calc(100vh - 48px);background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.2);display:flex;flex-direction:column;overflow:hidden;transform:scale(0);transform-origin:bottom right;transition:transform .3s cubic-bezier(.4,0,.2,1);opacity:0}
+    .chatbot-panel.open{transform:scale(1);opacity:1}
+    .chatbot-header{padding:20px;background:#0E3A1F;color:#fff;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
+    .chatbot-header-info{display:flex;align-items:center;gap:12px}
+    .chatbot-avatar{width:40px;height:40px;border-radius:50%;background:#86C540;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex:0 0 auto;color:#fff;font-family:system-ui}
+    .chatbot-header h4{font-size:16px;font-weight:700;margin:0}.chatbot-header p{font-size:12px;color:rgba(255,255,255,.7);margin:2px 0 0}
+    .chatbot-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:18px;transition:background .2s}.chatbot-close:hover{background:rgba(255,255,255,.2)}
+    .chatbot-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+    .chatbot-msg{max-width:88%;padding:14px 18px;border-radius:18px;font-size:14px;line-height:1.55;animation:chatFade .3s ease}
+    .chatbot-msg.bot{background:#f4f4f4;color:#1a1a2e;align-self:flex-start;border-bottom-left-radius:6px}
+    .chatbot-msg.user{background:#86C540;color:#fff;align-self:flex-end;border-bottom-right-radius:6px}
+    .chatbot-msg strong{font-weight:700}
+    .chatbot-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 12px}
+    .chatbot-quick button{padding:10px 16px;border:1.5px solid #e0e0e0;border-radius:99px;background:#fff;color:#1a1a2e;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}.chatbot-quick button:hover{border-color:#86C540;background:#f1f8e9}
+    .chatbot-input-area{padding:12px 16px;border-top:1px solid #eee;display:flex;gap:8px;align-items:center;flex:0 0 auto}
+    .chatbot-input-area input{flex:1;padding:12px 16px;border:1.5px solid #e0e0e0;border-radius:99px;font-size:14px;outline:none;font-family:inherit}.chatbot-input-area input:focus{border-color:#86C540}
+    .chatbot-input-area button{width:40px;height:40px;border-radius:50%;background:#86C540;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto;transition:background .15s}.chatbot-input-area button:hover{background:#154A29}
+    .chatbot-input-area button:disabled{opacity:.4}
+    @keyframes chatFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes dotPulse{0%,80%,100%{opacity:.3}40%{opacity:1}}
+    .typing-dots span{animation:dotPulse 1.4s infinite;animation-fill-mode:both;font-size:20px;letter-spacing:3px}
+    .typing-dots span:nth-child(2){animation-delay:.2s}
+    .typing-dots span:nth-child(3){animation-delay:.4s}
+    @media(max-width:480px){.chatbot-panel{bottom:0;right:0;width:100%;max-width:100%;height:100vh;max-height:100vh;border-radius:0}}
+  `;
+  document.head.appendChild(style);
+
+  const bubble = document.createElement('button');
+  bubble.className = 'chatbot-bubble';
+  bubble.innerHTML = '💬';
+  document.body.appendChild(bubble);
+
+  const panel = document.createElement('div');
+  panel.className = 'chatbot-panel';
+  panel.innerHTML = '<div class="chatbot-header"><div class="chatbot-header-info"><div class="chatbot-avatar">H</div><div><h4>Herbert</h4><p>Poradce skupiny Úsporami</p></div></div><button class="chatbot-close">✕</button></div><div class="chatbot-messages" id="chatMsgs"></div><div class="chatbot-quick" id="chatQuick"></div><div class="chatbot-input-area"><input type="text" placeholder="Napište dotaz..." id="chatField"><button id="chatSend">→</button></div>';
+  document.body.appendChild(panel);
+
+  const msgs = panel.querySelector('#chatMsgs');
+  const quick = panel.querySelector('#chatQuick');
+  const inputField = panel.querySelector('#chatField');
+  const sendBtn = panel.querySelector('#chatSend');
+  let sending = false, opened = false;
+
+  function addMsg(text, type='bot') {
+    const d = document.createElement('div');
+    d.className = 'chatbot-msg ' + type;
+    d.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>').replace(/\s*•\s*/g, '<br>• ');
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function showTyping() { const d = document.createElement('div'); d.className = 'chatbot-msg bot'; d.innerHTML = '<span class="typing-dots"><span>•</span><span>•</span><span>•</span></span>'; d.id = 'typingIndicator'; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; }
+  function hideTyping() { const el = document.getElementById('typingIndicator'); if (el) el.remove(); }
+  function setQuick(buttons) { quick.innerHTML = ''; buttons.forEach(b => { const btn = document.createElement('button'); btn.textContent = b; btn.addEventListener('click', () => sendMessage(b)); quick.appendChild(btn); }); }
+
+  async function sendMessage(text) {
+    if (sending || !text.trim()) return;
+    sending = true; sendBtn.disabled = true;
+    addMsg(text, 'user'); inputField.value = ''; quick.innerHTML = ''; showTyping();
+    try {
+      const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: '[Stránka: partner-rk] ' + text, sessionId: SESSION_ID }) });
+      const data = await res.json(); hideTyping();
+      addMsg(data.reply || 'Omlouvám se, zkuste to znovu.');
+    } catch (err) { hideTyping(); addMsg('Omlouvám se, nepodařilo se spojit. Zavolejte **+420 777 222 199**.'); }
+    sending = false; sendBtn.disabled = false; inputField.focus();
+  }
+
+  sendBtn.addEventListener('click', () => sendMessage(inputField.value));
+  inputField.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(inputField.value); });
+
+  // Auto-engage after 8s
+  setTimeout(() => {
+    if (!opened) {
+      bubble.classList.add('pulse');
+      const badge = document.createElement('span'); badge.className = 'chatbot-badge'; badge.textContent = '1'; bubble.appendChild(badge);
+      const tooltip = document.createElement('div'); tooltip.className = 'chatbot-tooltip';
+      tooltip.innerHTML = '👋 Potřebujete poradit s pasportem nebo PENB?<span class="close-tip" onclick="event.stopPropagation();this.parentElement.remove()">✕</span>';
+      tooltip.addEventListener('click', () => { tooltip.remove(); bubble.click(); });
+      document.body.appendChild(tooltip);
+      setTimeout(() => { if (tooltip.parentElement) tooltip.remove(); }, 15000);
+    }
+  }, 8000);
+
+  bubble.addEventListener('click', () => {
+    bubble.classList.add('open'); panel.classList.add('open');
+    bubble.classList.remove('pulse');
+    const b = bubble.querySelector('.chatbot-badge'); if (b) b.remove();
+    const t = document.querySelector('.chatbot-tooltip'); if (t) t.remove();
+    if (!opened) {
+      opened = true;
+      setTimeout(() => {
+        addMsg('Ahoj! 👋 Jsem Herbert, poradce skupiny Úsporami. Pomohu vám s pasporty, PENB nebo projekční dokumentací pro vaše klienty.\n\nCo potřebujete?');
+        setTimeout(() => setQuick(['📐 Pasport nemovitosti', '📋 PENB průkaz', '🏗️ Projekční dokumentace', '💰 Ceník pro RK', '📞 Chci zavolat']), 400);
+      }, 300);
+    }
+    inputField.focus();
+  });
+  panel.querySelector('.chatbot-close').addEventListener('click', () => { panel.classList.remove('open'); bubble.classList.remove('open'); });
+
+  // Expose for service card clicks
+  window.herbertAsk = function(question) {
+    bubble.click();
+    setTimeout(() => { sendMessage(question); }, 800);
+  };
+})();
+</script>
+<script>
+/* Partner RK formulář -> usporami-core webhook */
+(function(){
+  var LEAD_API = 'https://moje.usporami.cz/api/poptavka/partner-rk-webhook';
+  var form = document.getElementById('rkForm');
+  if(!form) return;
+  function val(id){ var el=document.getElementById(id); return el ? (el.value||'').trim() : ''; }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = document.getElementById('f-submit');
+    var payload = {
+      jmeno: val('f-jmeno'),
+      nazevRk: val('f-rk') || null,
+      email: val('f-email'),
+      telefon: val('f-tel'),
+      typSluzby: val('f-sluzba'),
+      typNemovitosti: val('f-nemovitost'),
+      adresa: val('f-adresa'),
+      mesto: val('f-mesto'),
+      psc: val('f-psc'),
+      poznamka: val('f-poznamka') || null
+    };
+    var orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Odesilam...';
+    fetch(LEAD_API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+      .then(function(res){ if(!res.ok){ throw new Error('HTTP '+res.status); } return res.json(); })
+      .then(function(){
+        form.innerHTML = '<div style="text-align:center;padding:40px"><div style="font-size:48px;margin-bottom:16px">✅</div><h3 style="color:#fff;font-size:20px">Poptávka odeslána!</h3><p style="color:rgba(255,255,255,.7);margin-top:8px;font-size:13px">Ozveme se do 48 hodin.</p></div>';
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = orig;
+        alert('Odeslani se nezdarilo. Zavolejte nam prosim na +420 777 222 199, nebo to zkuste znovu.');
+      });
+  });
+})();
+</script>
+</body>
+</html>
