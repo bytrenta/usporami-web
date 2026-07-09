@@ -5,11 +5,80 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+
+// 2026-07-09 (Jakub — incident: neomezené CORS + žádná auth = otevřený proxy
+// na Claude API, zneužitý zvenku, abnormální spotřeba kreditu). Fix:
+//   1. CORS jen na naše vlastní domény (ne '*')
+//   2. Per-IP rate limit (sliding window)
+//   3. Denní token cap napříč celým serverem (kill switch při zneužití)
+//   4. Limit délky zprávy (brání "burn tokens" jedním obřím promptem)
+// Server běží za Coolify/Traefik reverse proxy — potřebujeme trust proxy,
+// jinak req.ip vrací vždy IP proxy, ne klienta, a rate limit by byl k ničemu.
+app.set('trust proxy', 1);
+
+const ALLOWED_ORIGINS = [
+  'https://usporami.cz',
+  'https://www.usporami.cz',
+  'https://dotacemi.cz',
+  'https://www.dotacemi.cz',
+  'https://energetikou.cz',
+  'https://www.energetikou.cz',
+  'https://projektem.cz',
+  'https://www.projektem.cz',
+];
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Requesty bez Origin hlavičky (curl, health-check, server-to-server)
+      // necháváme projít — nejsou to weboví útočníci z prohlížeče. Skutečnou
+      // ochranu proti scriptům dělá rate limit + denní cap níž.
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      return callback(new Error('CORS: origin not allowed'));
+    },
+  }),
+);
+app.use(express.json({ limit: '20kb' }));
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const knowledgeBase = fs.readFileSync(path.join(__dirname, 'knowledge-base.md'), 'utf-8');
+
+// ---------------------------------------------------------------------------
+// Rate limiting — per IP, sliding window
+// ---------------------------------------------------------------------------
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 min
+const RATE_LIMIT_MAX_REQUESTS = 20; // běžný návštěvník napíše max pár zpráv
+const ipHits = new Map(); // ip -> [timestamps]
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const hits = (ipHits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  ipHits.set(ip, hits);
+  return hits.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
+// ---------------------------------------------------------------------------
+// Denní token cap — kill switch. Pokud i přes rate limit někdo pojede přes
+// hodně IP adres (botnet), tenhle limit zastaví další volání Anthropic API
+// úplně, dokud se nepřehoupne den. Práh nastaven výrazně nad běžný provoz
+// (odhad: desítky konverzací/den × pár set tokenů). Uprav přes env
+// CHATBOT_DAILY_TOKEN_CAP, pokud je potřeba.
+// ---------------------------------------------------------------------------
+const DAILY_TOKEN_CAP = Number(process.env.CHATBOT_DAILY_TOKEN_CAP) || 1_000_000;
+let dailyUsage = { date: new Date().toISOString().slice(0, 10), tokens: 0 };
+
+function checkAndTrackDailyUsage(tokens) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (dailyUsage.date !== today) {
+    dailyUsage = { date: today, tokens: 0 };
+  }
+  if (dailyUsage.tokens >= DAILY_TOKEN_CAP) return false;
+  dailyUsage.tokens += tokens;
+  return true;
+}
+
+const MAX_MESSAGE_LENGTH = 1500;
 
 const SYSTEM_PROMPT = `Jsi přátelský a profesionální online poradce skupiny Úsporami. Pomáháš zákazníkům zorientovat se v dotačních programech NZÚ 2026+, energetických službách a projektové dokumentaci.
 
@@ -130,7 +199,7 @@ async function callClaude(messages, modelIndex = 0) {
   });
 
   const data = await response.json();
-  
+
   if (data.error) {
     console.log('Model', model, 'failed:', data.error.type, data.error.message);
     if (data.error.type === 'not_found_error' && modelIndex < MODELS.length - 1) {
@@ -138,9 +207,10 @@ async function callClaude(messages, modelIndex = 0) {
     }
     throw new Error(data.error.message);
   }
-  
+
   console.log('Success with model:', model);
-  return data.content[0].text;
+  const usageTokens = (data.usage?.input_tokens || 0) + (data.usage?.output_tokens || 0);
+  return { text: data.content[0].text, usageTokens };
 }
 
 app.post('/api/chat', async (req, res) => {
@@ -148,6 +218,23 @@ app.post('/api/chat', async (req, res) => {
     const { message, sessionId } = req.body;
     if (!message || !sessionId) {
       return res.status(400).json({ error: 'Missing message or sessionId' });
+    }
+    if (typeof message !== 'string' || message.length > MAX_MESSAGE_LENGTH) {
+      return res.status(400).json({ error: 'Message too long' });
+    }
+
+    const clientIp = req.ip || req.socket.remoteAddress || 'unknown';
+    if (isRateLimited(clientIp)) {
+      console.warn('[rate-limit] blocked IP:', clientIp);
+      return res.status(429).json({
+        reply: 'Momentálně zpracovávám hodně dotazů. Zkuste to prosím za chvíli, nebo zavolejte na **+420 777 222 199**.',
+      });
+    }
+    if (dailyUsage.tokens >= DAILY_TOKEN_CAP) {
+      console.error('[daily-cap] EXCEEDED — chat disabled until midnight. tokens:', dailyUsage.tokens);
+      return res.status(503).json({
+        reply: 'Omlouvám se, momentálně jsem nedostupný. Zavolejte nám prosím na **+420 777 222 199** — rádi vám poradíme osobně.',
+      });
     }
 
     if (!conversations.has(sessionId)) {
@@ -158,8 +245,9 @@ app.post('/api/chat', async (req, res) => {
     conv.messages.push({ role: 'user', content: message });
 
     const recentMessages = conv.messages.slice(-20);
-    const reply = await callClaude(recentMessages);
+    const { text: reply, usageTokens } = await callClaude(recentMessages);
     conv.messages.push({ role: 'assistant', content: reply });
+    checkAndTrackDailyUsage(usageTokens);
 
     // Cleanup old sessions
     const now = Date.now();
@@ -170,14 +258,19 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply });
   } catch (error) {
     console.error('Chat error:', error.message);
-    res.status(500).json({ 
+    res.status(500).json({
       reply: 'Omlouvám se, momentálně mám technické potíže. Zavolejte nám prosím na **+420 777 222 199** — rádi vám poradíme osobně.'
     });
   }
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', sessions: conversations.size, apiKeySet: !!API_KEY });
+  res.json({
+    status: 'ok',
+    sessions: conversations.size,
+    apiKeySet: !!API_KEY,
+    dailyUsage: { date: dailyUsage.date, tokens: dailyUsage.tokens, cap: DAILY_TOKEN_CAP },
+  });
 });
 
 const PORT = process.env.PORT || 3001;
