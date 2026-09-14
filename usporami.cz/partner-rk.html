@@ -295,6 +295,8 @@ section{padding:80px 0}
         <div class="field"><label>PSČ</label><input id="f-psc" type="text" placeholder="500 02" maxlength="10"></div>
       </div>
       <div class="field"><label>Poznámka</label><textarea id="f-poznamka" placeholder="Doplňující informace..."></textarea></div>
+      <!-- Honeypot (antispam, run #270b): člověk pole nevidí ani nevyplní; bot ano → server zadání tiše zahodí. -->
+      <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"><label for="f-web">Web</label><input id="f-web" type="text" name="web" tabindex="-1" autocomplete="off"></div>
       <div class="field-check"><input id="f-gdpr" type="checkbox" required><span>Souhlasím se <a href="https://usporami.cz/#gdpr" style="color:inherit;text-decoration:underline">zpracováním osobních údajů</a> za účelem vyřízení poptávky.</span></div>
       <button type="submit" class="form-submit" id="f-submit">Odeslat poptávku →</button>
     </form>
@@ -447,6 +449,7 @@ section{padding:80px 0}
     e.preventDefault();
     var btn = document.getElementById('f-submit');
     var payload = {
+      web: val('f-web'),
       jmeno: val('f-jmeno'),
       nazevRk: val('f-rk') || null,
       email: val('f-email'),
