@@ -238,6 +238,8 @@
     <div class="field"><label>E-mail</label><input id="f-email" type="email" placeholder="vy@example.cz" required></div>
     <div class="field"><label>Typ dokumentace</label><select id="f-sluzba"><option>Pasport stavby (zaměření skutečného stavu)</option><option>Dokumentace pro povolení stavby</option><option>Stavební dozor</option><option>3D skenování budovy</option><option>Legalizace stavby</option><option>Dotační dokumentace (NZÚ, OPŽP)</option><option>Statické posouzení</option><option>Prováděcí dokumentace</option><option>Jiné / nevím</option></select></div>
     <div class="field"><label>Popis záměru</label><textarea id="f-popis" placeholder="Typ stavby, rozsah, účel dokumentace..."></textarea></div>
+    <!-- Honeypot (antispam, run #359): člověk pole nevidí ani nevyplní; bot ano → server poptávku tiše zahodí. Pole „web“ je obsazené názvem webu, proto „website“. -->
+    <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"><label for="f-website">Web</label><input id="f-website" type="text" name="website" tabindex="-1" autocomplete="off"></div>
     <button type="submit" class="btn btn-primary">Odeslat poptávku <svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
     <p class="contact-form-foot">Odesláním souhlasíte se <a href="#">zpracováním osobních údajů</a>.</p>
   </form>
@@ -281,7 +283,7 @@
     e.preventDefault();
     var btn=f.querySelector('button[type=submit]'); var orig=btn?btn.innerHTML:'';
     if(btn){btn.disabled=true;btn.textContent='Odesilam...';}
-    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jmeno:v('f-jmeno'),email:v('f-email'),telefon:v('f-tel'),sluzba:v('f-sluzba'),popis:v('f-popis'),web:WEB})})
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jmeno:v('f-jmeno'),email:v('f-email'),telefon:v('f-tel'),sluzba:v('f-sluzba'),popis:v('f-popis'),web:WEB,website:v('f-website')})})
       .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
       .then(function(){f.innerHTML='<div style="text-align:center;padding:40px 10px"><div style="font-size:48px;margin-bottom:12px">\u2705</div><h3 style="margin:0 0 6px">Dekujeme!</h3><p style="opacity:.7;font-size:14px">Ozveme se do 48 hodin.</p></div>';})
       .catch(function(){if(btn){btn.disabled=false;btn.innerHTML=orig;}alert('Odeslani se nezdarilo. Zavolejte nam prosim na +420 777 222 199, nebo to zkuste znovu.');});
