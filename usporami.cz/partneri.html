@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Partnerský program Úsporami</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://moje.usporami.cz/partneri">
+<!--
+  Stránka pro partnery žije v aplikaci (moje.usporami.cz/partneri) — tahle adresa
+  je na letáku a v QR kódu, jen přesměruje. ?zdroj=<slug> (leták = letak) se
+  zachová, bez parametru doplníme zdroj=web, aby CRM vědělo, odkud partner přišel.
+  Bez JS: meta refresh + odkaz níže. (run #453, 25. 9. 2026)
+-->
+<script>
+(function () {
+  var p = new URLSearchParams(window.location.search);
+  if (!p.has("zdroj") || !p.get("zdroj")) p.set("zdroj", "web");
+  window.location.replace("https://moje.usporami.cz/partneri?" + p.toString() + window.location.hash);
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=https://moje.usporami.cz/partneri?zdroj=web"></noscript>
+<style>body{margin:0;font-family:Manrope,system-ui,sans-serif;background:#f8f7f2;color:#0a1a0e;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:24px}a{color:#2c7a45;font-weight:700}</style>
+</head>
+<body>
+<p>Přesměrováváme vás na partnerský program…<br><a href="https://moje.usporami.cz/partneri?zdroj=web">Pokračovat na moje.usporami.cz/partneri</a></p>
+</body>
+</html>
