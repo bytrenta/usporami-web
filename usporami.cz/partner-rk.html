@@ -95,6 +95,11 @@ section{padding:80px 0}
 .field textarea{resize:vertical;min-height:80px}
 .field-check{display:flex;gap:10px;align-items:flex-start;font-size:11px;color:rgba(255,255,255,.6);margin:20px 0}
 .field-check input{margin-top:2px;accent-color:var(--lime-500)}
+/* Run #792: majitel nemovitosti / kontakt pro zaměření */
+.field-group{border-top:1px solid rgba(255,255,255,.12);margin:8px 0 16px;padding-top:16px}
+.field-group-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:4px}
+.field-group-hint{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:4px}
+.field-group .field-check{margin:10px 0 14px;font-size:12px;color:rgba(255,255,255,.8)}
 .form-submit{width:100%;padding:16px;background:var(--lime-500);color:var(--forest-900);font-family:inherit;font-size:16px;font-weight:700;border:none;border-radius:var(--r-pill);cursor:pointer;transition:transform .2s,box-shadow .2s}
 .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(134,197,64,.4)}
 
@@ -295,6 +300,19 @@ section{padding:80px 0}
         <div class="field"><label>Adresa nemovitosti *</label><input id="f-adresa" type="text" placeholder="Ulice a č.p." required></div>
         <div class="field"><label>PSČ</label><input id="f-psc" type="text" placeholder="500 02" maxlength="10"></div>
       </div>
+      <!-- Run #792: majitel nemovitosti / kontakt pro zaměření (komu zaměřovač zavolá) -->
+      <div class="field-group" id="f-majitel-blok">
+        <div class="field-group-title">Majitel nemovitosti (kontakt pro zaměření)</div>
+        <div class="field-group-hint">Komu zavoláme kvůli termínu zaměření a s kým se potkáme na místě.</div>
+        <label class="field-check"><input id="f-maj-ja" type="checkbox"><span>Kontakt pro zaměření jsem já — termín domluvíte se mnou</span></label>
+        <div id="f-majitel-pole">
+          <div class="field-row">
+            <div class="field"><label for="f-maj-jmeno">Jméno a příjmení majitele *</label><input id="f-maj-jmeno" type="text" placeholder="Petr Novák" required></div>
+            <div class="field"><label for="f-maj-tel">Telefon majitele *</label><input id="f-maj-tel" type="tel" placeholder="+420 ..." required></div>
+          </div>
+          <div class="field"><label for="f-maj-email">E-mail majitele</label><input id="f-maj-email" type="email" placeholder="majitel@example.cz"></div>
+        </div>
+      </div>
       <div class="field"><label>Poznámka</label><textarea id="f-poznamka" placeholder="Doplňující informace..."></textarea></div>
       <!-- Honeypot (antispam, run #270b): člověk pole nevidí ani nevyplní; bot ano → server zadání tiše zahodí. -->
       <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden"><label for="f-web">Web</label><input id="f-web" type="text" name="web" tabindex="-1" autocomplete="off"></div>
@@ -446,6 +464,15 @@ section{padding:80px 0}
   var form = document.getElementById('rkForm');
   if(!form) return;
   function val(id){ var el=document.getElementById(id); return el ? (el.value||'').trim() : ''; }
+  // Run #792: „kontakt pro zaměření jsem já“ skryje pole majitele (a zruší jejich povinnost).
+  var majJa = document.getElementById('f-maj-ja');
+  var majPole = document.getElementById('f-majitel-pole');
+  function prepniMajitele(){
+    var ja = !!(majJa && majJa.checked);
+    if (majPole) majPole.style.display = ja ? 'none' : '';
+    ['f-maj-jmeno','f-maj-tel'].forEach(function(id){ var el=document.getElementById(id); if(el) el.required = !ja; });
+  }
+  if (majJa) { majJa.addEventListener('change', prepniMajitele); prepniMajitele(); }
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var btn = document.getElementById('f-submit');
@@ -460,7 +487,11 @@ section{padding:80px 0}
       adresa: val('f-adresa'),
       mesto: val('f-mesto'),
       psc: val('f-psc'),
-      poznamka: val('f-poznamka') || null
+      poznamka: val('f-poznamka') || null,
+      majitelShodny: !!(majJa && majJa.checked),
+      majitelJmeno: (majJa && majJa.checked) ? null : (val('f-maj-jmeno') || null),
+      majitelTelefon: (majJa && majJa.checked) ? null : (val('f-maj-tel') || null),
+      majitelEmail: (majJa && majJa.checked) ? null : (val('f-maj-email') || null)
     };
     var orig = btn.textContent;
     btn.disabled = true; btn.textContent = 'Odesilam...';
