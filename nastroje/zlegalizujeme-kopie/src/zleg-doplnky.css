@@ -1,0 +1,22 @@
+
+/* ===== Run #738 — doplňky kopie konverzky (odbočka podle kalkulačky, zvýraznění slova, chyby) ===== */
+.zleg-hp{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important}
+.zleg-kruh{position:relative;display:inline-block;white-space:nowrap}
+.zleg-kruh-svg{position:absolute;left:-7%;top:-14%;width:114%;height:128%;overflow:visible;pointer-events:none}
+.zleg-kruh-svg path{stroke-dasharray:1;stroke-dashoffset:1;animation:zlegKruh 1.1s .5s ease-out forwards}
+@keyframes zlegKruh{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.zleg-kruh-svg path{animation:none;stroke-dashoffset:0}}
+.zleg-verdikt{border-radius:12px;padding:16px 18px;margin:6px 0 18px;background:#effbe9;border-left:5px solid #7dd856;font-family:Inter,Arial,sans-serif;color:#1a1b18;text-align:left}
+.zleg-verdikt-resit{background:#fff7e6;border-left-color:#ffb000}
+.zleg-verdikt-stitek{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:#7dd856;color:#fff}
+.zleg-verdikt-resit .zleg-verdikt-stitek{background:#ffb000;color:#1a1b18}
+.zleg-verdikt-titul{font-family:"Crimson Text",Georgia,serif;font-weight:700;font-size:26px;line-height:1.15;margin:10px 0 2px}
+.zleg-verdikt-podtitul{font-weight:700;font-size:17px;margin:0 0 6px}
+.zleg-verdikt-text{font-size:16px;line-height:1.5;margin:0 0 6px}
+.zleg-verdikt-pozn{font-size:13px;line-height:1.4;color:#5f6368;margin:6px 0 0}
+.zleg-verdikt-mini{font-family:Inter,Arial,sans-serif;font-size:16px;font-weight:500;margin:4px 0 10px;text-align:left}
+.zleg-chyba{color:#d44753;font-family:Inter,Arial,sans-serif;font-size:16px;margin-top:8px;text-align:left}
+.zleg-akce{margin-top:16px;text-align:center}
+.zleg-akce .btn{background-color:#7dd856;border-color:#7dd856;color:#fff;font-weight:700;border-radius:8px;padding:.5rem 1.5rem}
+.survey-component .input-container input.is-invalid{border-color:#d44753}
+@media (max-width:767.98px){.zleg-verdikt{padding:14px 14px}.zleg-verdikt-titul{font-size:22px}.zleg-verdikt-text{font-size:15px}}
